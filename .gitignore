@@ -8,6 +8,8 @@
 .idea
 
 project/
+resources/
+src/test/
 
 *.sql
 
