@@ -1,5 +1,5 @@
 val dependancies = Seq (
-  "com.microsoft.sqlserver" % "mssql-jdbc" % "7.0.0.jre8" % Test,
+  "mysql" % "mysql-connector-java" % "5.1.24",
   "commons-cli" % "commons-cli" % "1.4",
   "org.apache.commons" % "commons-configuration2" % "2.1.1",
   "org.apache.commons" % "commons-text" % "1.2",
@@ -11,7 +11,9 @@ val dependancies = Seq (
   "com.typesafe.akka" %% "akka-actor" % "2.5.19",
   "com.typesafe.akka" %% "akka-testkit" % "2.5.19" % Test,
   "org.scalatest" %% "scalatest" % "3.0.5" % "test",
-  "com.softwaremill.sttp" %% "core" % "1.5.1" % Test
+  "com.softwaremill.sttp" %% "core" % "1.5.1" % Test,
+  "net.liftweb" %% "lift-json" % "3.2.0",
+  "com.typesafe.play" %% "play-json" % "2.6.10"
 )
 lazy val root = (project in file(".")).settings(
   name := "Cinema",
@@ -20,3 +22,7 @@ lazy val root = (project in file(".")).settings(
   libraryDependencies ++= dependancies 
 )
 
+enablePlugins(JavaAppPackaging)
+
+dockerBaseImage := "anapsix/alpine-java"
+dockerExposedPorts ++= Seq(9000)

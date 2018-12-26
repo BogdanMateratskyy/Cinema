@@ -13,9 +13,14 @@ object Application extends App {
     implicit val materializer: ActorMaterializer = ActorMaterializer()
     implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
-    val routes = complete("Running...")
+    val routes = (new Api).routes
 
-    Http().bindAndHandle(routes, "localhost", 9000)
+    val bindingFuture = Http().bindAndHandle(routes, "localhost", 9000).recoverWith{
+      case _ => sys.exit(1)
+    }
+    sys.addShutdownHook {
+      bindingFuture.map(_.unbind())
+    }
   }
   start()
 }
