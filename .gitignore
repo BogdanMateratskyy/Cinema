@@ -7,10 +7,10 @@
 #Idea files
 .idea
 
-resources/
+
 src/test/
 
-*.sql
+#*.sql
 
 #Eclipse files
 *.project
