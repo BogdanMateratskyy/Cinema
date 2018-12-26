@@ -1,42 +1,22 @@
 package config
 
-//import java.io.File
 import java.sql.{Connection, DriverManager}
-import java.util.Properties
-
-//import org.apache.commons.configuration2.Configuration
-//import org.apache.commons.configuration2.builder.fluent.Configurations
 
 object ConfigManager {
-  var sqlConnectionUrl: String = _
-  var sqlUser: String = _
-  var sqlPassword: String = _
 
-  private val dataSinkProperties = new Properties()
+  val driver = "com.mysql.jdbc.Driver"
+  val sqlUrl = "localhost"
+  val sqlPort = 3306
+  val sqlDatabase = "Cinema"
 
-  Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
+  var sqlUser: String = "test"
+  var sqlPassword: String = "test"
 
-  def configure: Unit = {
-//
-//    var configurations = new Configurations
-//    var fileProperties: File = new File(propertyFileLocation)
-//    var config: Configuration = configurations.properties(fileProperties)
+  Class.forName(driver)
 
-    sqlUser = "Bogdan"
-    sqlPassword = null
-
-    val sqlUrl = "localhost"
-    val sqlDatabase = "Cinema"
-    val sqlPort = 1433
-
-    sqlConnectionUrl = s"jdbc:sqlserver://$sqlUrl:$sqlPort/$sqlDatabase;" //+ "databaseName=;user=$sqlUser;password=$sqlPassword;"
-  }
+  var sqlConnectionUrl = s"jdbc:mysql://$sqlUrl:$sqlPort/$sqlDatabase"
 
   def getSqlConnection: Connection = {
-    dataSinkProperties.put("user", sqlUser)
-    dataSinkProperties.put("password", sqlPassword)
-    dataSinkProperties.put("useSSL", "false")
-
-    DriverManager.getConnection (sqlConnectionUrl, dataSinkProperties)
+     DriverManager.getConnection(sqlConnectionUrl, sqlUser, sqlPassword)
   }
 }

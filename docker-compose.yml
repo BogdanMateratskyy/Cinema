@@ -1,0 +1,6 @@
+version: "3.0"
+services:
+  cinema:
+    build: ./target/docker/stage
+    ports:
+      - 80:9000
